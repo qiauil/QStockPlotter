@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="16"
+   width="16"
+   viewBox="0 0 16 16"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="ChevronLeft_white.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="14.75"
+     inkscape:cx="4.3728814"
+     inkscape:cy="8"
+     inkscape:window-width="2560"
+     inkscape:window-height="1494"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
+  <g
+     id="g3"
+     transform="matrix(-1,0,0,1,16.057143,0)">
+    <path
+       id="path1"
+       transform="matrix(0.19047619,0,0,0.19047619,-1.4,-1.4)"
+       fill="#ffffff"
+       d="m 33,12 1.136719,0.222656 0.972656,0.667969 33,33 0.667969,0.97266 L 69,48 l -0.222656,1.136719 -0.667969,0.972656 -33,33 -0.972656,0.667969 L 33,84 31.863281,83.777344 30.890625,83.109375 30.222654,82.136719 30,81 30.222654,79.863281 30.890625,78.890625 61.734375,48 30.890625,17.109375 30.222654,16.136719 30,15 l 0.222654,-1.136719 0.667971,-0.972656 0.972656,-0.667969 z" />
+  </g>
+</svg>

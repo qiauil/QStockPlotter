@@ -1,0 +1,3 @@
+'''
+Functional components for plotters.
+'''
