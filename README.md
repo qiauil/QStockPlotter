@@ -1,6 +1,6 @@
 # QStockPlotter
 
-A PyQt-based plotter stock data
+A PyQt-based plotter for stock data
 
 <img src="pics/main.png" alt="" style="zoom: 50%;" />
 
@@ -63,7 +63,7 @@ The default `QStockPlotter` is built on a series of function components. Each co
 * `frame_recorder`: A component for recording and managing frames in a plot widget.
 * `zoom_move`: A component provides scrollers and a zoom control widget for a plot widget
 
-All the components are located in the `component` folder. These components provide different functions for a basic plotter, which should be an instance of `QPlotWidget`. `QPlotWidget` is a subclass of `PlotWidget` from [PyQtGraph](https://www.pyqtgraph.org/), offering basic plot functions with different zoom models. By developing and integrating the components for the `QPlotWidget`, users can build different complex widgets for different applications. Please refer to the source code of `QStockPlotter` to see how these components work with `QPlotWidget`.
+All the components are located in the `component` folder. These components provide different functions for a basic plotter, which should be an instance of `QPlotWidget`. `QPlotWidget` is a subclass of `PlotWidget` from [PyQtGraph](https://www.pyqtgraph.org/), offering basic plot functions with different zoom models. By developing and integrating the components for the `QPlotWidget`, users can build different complex widgets for different applications. Please refer to the  [source code](https://github.com/qiauil/QStockPlotter/blob/main/qstock_plotter/__init__.py) of `QStockPlotter` to see how these components work with `QPlotWidget`.
 
 ### Add more plot item
 
