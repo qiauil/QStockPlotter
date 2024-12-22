@@ -15,7 +15,7 @@ def get_install_requires():
 
 setuptools.setup(
     name="qstock_plotter",
-    version="0.0.01",
+    version="0.0.2",
     author="Qiauil",
     author_email="qiangliu.7@outlook.com",
     description="A PyQt-based plotter stock data",
@@ -23,6 +23,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://qiauil.github.io/",
     packages=setuptools.find_packages(),
+    include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
