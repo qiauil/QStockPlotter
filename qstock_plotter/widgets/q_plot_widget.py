@@ -107,6 +107,9 @@ class QPlotWidget(PlotWidget):
     sigMouseLeaved = pyqtSignal()
     sigEnterPressed = pyqtSignal()
     sigEscapePressed = pyqtSignal()
+    sigViewChanged = pyqtSignal()
+    sigViewChangedByDrag = pyqtSignal()
+    sigViewChangedNotByDrag = pyqtSignal()
     
     def __init__(self, parent=None, background='default', plotItem=None, **kargs):
         super().__init__(parent, background, plotItem, **kargs)
@@ -212,10 +215,13 @@ class QPlotWidget(PlotWidget):
                        minYRange=self.y_range_min, maxYRange=self.y_range_max)
 
     def __on_range_changed(self):
+        self.sigViewChanged.emit()
         if not self.move_from_code:
             self.update_plot()
+            self.sigViewChangedByDrag.emit()
         else:
             self.move_from_code=False
+            self.sigViewChangedNotByDrag.emit()
 
     def __on_theme_changed(self,theme=None):
         """
