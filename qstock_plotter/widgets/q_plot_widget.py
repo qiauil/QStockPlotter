@@ -8,7 +8,7 @@ from ..libs.style import LIGHT_BACKGROUND_COLOR,DARK_BACKGROUND_COLOR
 from ..libs.constant import ZOOM_MODEL, YLOC_MODEL, SCALE_LOC_MODEL
 from ..libs.helpers import limit_in_range,GeneralDataClass
 from .value_select_box import select_value
-
+from typing import Optional
 
 class CustomizedAxis(AxisItem):
    
@@ -450,13 +450,13 @@ class QPlotWidget(PlotWidget):
         else:
             return self.viewRect().top(), self.viewRect().bottom()
 
-    def update_plot(self, x_loc=None, x_range=None):
+    def update_plot(self, x_loc:Optional[float]=None, x_range:Optional[float]=None):
         """
         Update the plot with new x-location and x-range values.
 
         Parameters:
-        - x_loc (float): The x-location of the plot. If None, the leftmost x-coordinate of the view rectangle is used.
-        - x_range (float): The x-range of the plot. If None, the width of the view rectangle is used.
+        - x_loc Optional[float]: The x-location of the plot. If None, the leftmost x-coordinate of the view rectangle is used.
+        - x_range Optional[float]: The x-range of the plot. If None, the width of the view rectangle is used.
 
         Returns:
         None

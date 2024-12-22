@@ -1,6 +1,6 @@
 from PyQt6.QtGui import QResizeEvent
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
-from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout, QGridLayout
+from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout, QGridLayout, QSizePolicy
 from qfluentwidgets import TransparentToggleToolButton, FluentIcon, isDarkTheme
 from .widgets.q_plot_widget import QPlotWidget
 from .widgets.navigation_widget import PivotInterface
@@ -16,7 +16,7 @@ from .libs.plot_item import *
 from .libs.style import QStockIcon
 from .libs.data_handler import PricesDataFrame, VolumeDataFrame
 
-from typing import List
+from typing import Optional
 
 
 class QStockPlotter(QWidget):
@@ -139,6 +139,8 @@ class QStockPlotter(QWidget):
         self.navigation_widget.setFixedWidth(min(int(self.width() * 0.3), 350))
         return super().resizeEvent(a0)
 
+    def update_plot(self, x_loc:Optional[float]=None, x_range:Optional[float]=None):
+        self.main_plotter.update_plot(x_loc, x_range)
 
 class PriceVolumePlotter(QWidget):
 
@@ -152,8 +154,10 @@ class PriceVolumePlotter(QWidget):
         self.price_plotter = QStockPlotter(show_zoom_bar=True)
         self.volume_plotter = QStockPlotter(show_zoom_bar=True)
 
-        self.main_layout.addWidget(self.price_plotter)
-        self.main_layout.addWidget(self.volume_plotter)
+        self.price_plotter.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.volume_plotter.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        self.main_layout.addWidget(self.price_plotter,stretch=3)
+        self.main_layout.addWidget(self.volume_plotter,stretch=1)
 
         self.price_plotter.main_plotter.sigViewChanged.connect(
             lambda: self.__on_view_changed(self.price_plotter.main_plotter)
@@ -164,12 +168,12 @@ class PriceVolumePlotter(QWidget):
 
     def __on_view_changed(self, active_plot_widget):
         if active_plot_widget == self.price_plotter.main_plotter:
-            self.volume_plotter.main_plotter.update_plot(
+            self.volume_plotter.update_plot(
                 x_loc=active_plot_widget.viewRect().left(),
                 x_range=active_plot_widget.viewRect().width(),
             )
         else:
-            self.price_plotter.main_plotter.update_plot(
+            self.price_plotter.update_plot(
                 x_loc=active_plot_widget.viewRect().left(),
                 x_range=active_plot_widget.viewRect().width(),
             )
@@ -178,5 +182,10 @@ class PriceVolumePlotter(QWidget):
         self, price_data: PricesDataFrame, 
         volume_data: VolumeDataFrame
     ):
-        self.price_plotter.add_main_item(get_plot_item(price_data))
-        self.volume_plotter.add_main_item(get_plot_item(volume_data))
+        price_item = get_plot_item(price_data)
+        self.price_plotter.add_main_item(price_item, x_ticks=price_item.get_x_ticks())
+        volume_item=get_plot_item(volume_data)
+        self.volume_plotter.add_main_item(volume_item, x_ticks=volume_item.get_x_ticks())
+
+    def update_plot(self, x_loc:Optional[float]=None, x_range:Optional[float]=None):
+        self.price_plotter.update_plot(x_loc, x_range)
