@@ -630,6 +630,6 @@ class QPlotWidget(PlotWidget):
             None
         """
         if enabled:
-            self.plotItem.hideButtons()
-        else:
             self.plotItem.showButtons()
+        else:
+            self.plotItem.hideButtons()
