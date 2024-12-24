@@ -13,7 +13,7 @@ from .compoents.draw_line import DrawLineComponent
 from .compoents.frame_recorder import FrameRecorderComponent
 from .compoents.average_line import AverageLineComponent
 from .libs.plot_item import *
-from .libs.style import QStockIcon
+from .libs.style import QStockIcon, set_background_with_theme
 from .libs.data_handler import PricesDataFrame, VolumeDataFrame
 
 from typing import Optional
@@ -92,9 +92,9 @@ class QStockPlotter(QWidget):
         self.plotter_grid_layout.addWidget(self.y_scroller, 0, 1, 1, 1)
         self.plotter_grid_layout.addWidget(self.x_scroller, 1, 0, 1, 2)
 
-        self.__on_theme_changed()
+        set_background_with_theme(self)
 
-        qconfig.themeChanged.connect(self.__on_theme_changed)
+        qconfig.themeChanged.connect(lambda theme: set_background_with_theme(self, theme))
 
     def add_main_item(self, plot_item, x_ticks=None, y_ticks=None):
         if self.main_item is not None:
@@ -118,22 +118,6 @@ class QStockPlotter(QWidget):
         else:
             self.navigation_widget.hide()
             self.show_up_button.setIcon(QStockIcon.CHEVRON_LEFT)
-
-    def __on_theme_changed(self, theme=None):
-        def set_background_color(color):
-            palette = self.palette()
-            palette.setColor(self.backgroundRole(), color)
-            self.setPalette(palette)
-
-        if theme == Theme.DARK:
-            set_background_color(DARK_BACKGROUND_COLOR)
-        elif theme == Theme.LIGHT:
-            set_background_color(LIGHT_BACKGROUND_COLOR)
-        else:
-            if isDarkTheme():
-                set_background_color(DARK_BACKGROUND_COLOR)
-            else:
-                set_background_color(LIGHT_BACKGROUND_COLOR)
 
     def resizeEvent(self, a0: QResizeEvent) -> None:
         self.navigation_widget.setFixedWidth(min(int(self.width() * 0.3), 350))
@@ -165,6 +149,10 @@ class PriceVolumePlotter(QWidget):
         self.volume_plotter.main_plotter.sigViewChanged.connect(
             lambda: self.__on_view_changed(self.volume_plotter.main_plotter)
         )
+
+        set_background_with_theme(self)
+
+        qconfig.themeChanged.connect(lambda theme: set_background_with_theme(self, theme))
 
     def __on_view_changed(self, active_plot_widget):
         if active_plot_widget == self.price_plotter.main_plotter:

@@ -1,9 +1,10 @@
 #from pyqtgraph import QtGui
 from typing import Any
 from PyQt6 import QtGui
+from PyQt6.QtWidgets import QWidget
 #from dataclasses import dataclass,field
 from .helpers import *
-from qfluentwidgets import StyleSheetBase, Theme, qconfig,FluentIconBase,getIconColor
+from qfluentwidgets import StyleSheetBase, Theme, qconfig,FluentIconBase,getIconColor,isDarkTheme
 from enum import Enum
 
 LIGHT_BACKGROUND_COLOR=QtGui.QColor(255,255,255)
@@ -74,5 +75,20 @@ class QStockIcon(FluentIconBase, Enum):
     def path(self, theme=Theme.AUTO):
         return project_path_qfile()+"resources/icons/"+f'{self.value}_{getIconColor(theme)}.svg'
 
+def set_background_with_theme(widget:QWidget, theme=None):
+    def set_background_color(color):
+        palette = widget.palette()
+        palette.setColor(widget.backgroundRole(), color)
+        widget.setPalette(palette)
+
+    if theme == Theme.DARK:
+        set_background_color(DARK_BACKGROUND_COLOR)
+    elif theme == Theme.LIGHT:
+        set_background_color(LIGHT_BACKGROUND_COLOR)
+    else:
+        if isDarkTheme():
+            set_background_color(DARK_BACKGROUND_COLOR)
+        else:
+            set_background_color(LIGHT_BACKGROUND_COLOR)
 
 DEFAULT_STYLE=make_style()
