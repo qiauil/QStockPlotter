@@ -148,7 +148,7 @@ class VolumeDataFrame(ChildDataFrame):
         super().__init__(parent_df, data_keys=["volume"], x_label_key="date")
 
 @dataclass
-class CandlestickFrame:
+class TradeData:
     prices:PricesDataFrame
     volume:VolumeDataFrame
 
@@ -157,9 +157,9 @@ class HandlerCandlestickHDF5():
     A class that handles candlestick data from an HDF5 file.
 
     Attributes:
-        day_data (CandlestickFrame): Candlestick data for daily intervals.
-        week_data (CandlestickFrame): Candlestick data for weekly intervals.
-        month_data (CandlestickFrame): Candlestick data for monthly intervals.
+        day_data (TradeData): Candlestick data for daily intervals.
+        week_data (TradeData): Candlestick data for weekly intervals.
+        month_data (TradeData): Candlestick data for monthly intervals.
 
     Methods:
         __init__(hdf5_path): Initializes the HandlerCandlestickHDF5 object.
@@ -170,6 +170,6 @@ class HandlerCandlestickHDF5():
         self.__df_day = pd.read_hdf(hdf5_path, key="day_data")
         self.__df_week = pd.read_hdf(hdf5_path, key="week_data")
         self.__df_month = pd.read_hdf(hdf5_path, key="month_data")
-        self.day_data = CandlestickFrame(PricesDataFrame(self.__df_day), VolumeDataFrame(self.__df_day))
-        self.week_data = CandlestickFrame(PricesDataFrame(self.__df_week), VolumeDataFrame(self.__df_week))
-        self.month_data = CandlestickFrame(PricesDataFrame(self.__df_month), VolumeDataFrame(self.__df_month))
+        self.day_data = TradeData(PricesDataFrame(self.__df_day), VolumeDataFrame(self.__df_day))
+        self.week_data = TradeData(PricesDataFrame(self.__df_week), VolumeDataFrame(self.__df_week))
+        self.month_data = TradeData(PricesDataFrame(self.__df_month), VolumeDataFrame(self.__df_month))
