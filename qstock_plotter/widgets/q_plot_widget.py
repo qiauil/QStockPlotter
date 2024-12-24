@@ -618,3 +618,18 @@ class QPlotWidget(PlotWidget):
             item, w = self.context_menu._createSubMenuItem(item)
             self.context_menu.view.insertItem(0, item)
             self.context_menu.view.setItemWidget(item, w)
+
+    def set_full_range_enabled(self, enabled: bool):
+        """
+        Set whether the full range is enabled.
+
+        Parameters:
+            enabled (bool): Whether the full range is enabled.
+
+        Returns:
+            None
+        """
+        if enabled:
+            self.plotItem.hideButtons()
+        else:
+            self.plotItem.showButtons()
