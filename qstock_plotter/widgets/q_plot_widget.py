@@ -633,3 +633,26 @@ class QPlotWidget(PlotWidget):
             self.plotItem.showButtons()
         else:
             self.plotItem.hideButtons()
+
+    def set_x_range(self, 
+                    x_start:Optional[float]=None,
+                    x_end:Optional[float]=None):
+        if x_start is not None:
+            self.x_start=x_start
+        if x_end is not None:
+            self.x_end=x_end
+        if x_start is not None or x_end is not None:
+            self.__on_plot_bounding_updated()
+            self.sigBoundingUpdated.emit()
+
+    def move_to_end(self):
+        """
+        Move the plot to the end (right side).
+        """
+        self.update_plot(x_loc=self.x_end-self.viewRect().width(),x_range=self.viewRect().width())
+    
+    def move_to_start(self):
+        """
+        Move the plot to the start (left side).
+        """
+        self.update_plot(x_loc=self.x_start,x_range=self.viewRect().width())

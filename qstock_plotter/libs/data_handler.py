@@ -41,7 +41,7 @@ class ChildDataFrame():
         self.max_y_key = max_y_key if max_y_key is not None else data_keys[0]
         self.min_y_key = min_y_key if min_y_key is not None else data_keys[0]
         x_label_key = x_label_key if x_label_key is not None else "date"
-        self.x_ticks = {i: str(self.parent_df[x_label_key][i]) for i in self.parent_df.index}
+        self.x_ticks : dict = {i: str(self.parent_df[x_label_key][i]) for i in self.parent_df.index}
         self.__index_start = self.get_min_x()
 
     def get_min_x(self):

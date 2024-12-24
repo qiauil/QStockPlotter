@@ -92,7 +92,14 @@ class QStockPlotter(QWidget):
         self.plotter_grid_layout.addWidget(self.y_scroller, 0, 1, 1, 1)
         self.plotter_grid_layout.addWidget(self.x_scroller, 1, 0, 1, 2)
 
-        for m in ['update_plot', "move_y_loc", "set_zoom_model", "set_y_loc_model", "set_full_range_enabled"]:
+        for m in ['update_plot', 
+                  "move_y_loc", 
+                  "set_zoom_model", 
+                  "set_y_loc_model", 
+                  "set_full_range_enabled",
+                  "set_x_range",
+                  "move_to_end",
+                  "move_to_start",]:
             setattr(self, m, getattr(self.main_plotter, m))
 
         set_background_with_theme(self)
@@ -178,5 +185,18 @@ class PriceVolumePlotter(QWidget):
         volume_item=get_plot_item(volume_data)
         self.volume_plotter.add_main_item(volume_item, x_ticks=volume_item.get_x_ticks())
 
+    def plot_trade_data(self, trade_data: TradeData):
+        self.plot_price_volume(trade_data.prices, trade_data.volume)
+
     def update_plot(self, x_loc:Optional[float]=None, x_range:Optional[float]=None):
         self.price_plotter.update_plot(x_loc, x_range)
+
+    def set_x_range(self, x_loc:Optional[float]=None, x_range:Optional[float]=None):
+        self.price_plotter.set_x_range(x_loc, x_range)
+        self.volume_plotter.set_x_range(x_loc, x_range)
+
+    def move_to_end(self):
+        self.price_plotter.move_to_end()
+    
+    def move_to_start(self):
+        self.price_plotter.move_to_start()
