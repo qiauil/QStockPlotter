@@ -92,6 +92,9 @@ class QStockPlotter(QWidget):
         self.plotter_grid_layout.addWidget(self.y_scroller, 0, 1, 1, 1)
         self.plotter_grid_layout.addWidget(self.x_scroller, 1, 0, 1, 2)
 
+        for m in ['update_plot', "move_y_loc", "set_zoom_model", "set_y_loc_model", "set_full_range_enabled"]:
+            setattr(self, m, getattr(self.main_plotter, m))
+
         set_background_with_theme(self)
 
         qconfig.themeChanged.connect(lambda theme: set_background_with_theme(self, theme))
