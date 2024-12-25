@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout, QGridLayout, QSizePolicy
 from qfluentwidgets import TransparentToggleToolButton, FluentIcon, isDarkTheme
 from .widgets.q_plot_widget import QPlotWidget
-from .widgets.navigation_widget import PivotInterface
+from .widgets.navigation_widget import PivotInterface, SegmentedInterface
 from .compoents.zoom_move import (
     StockWidgetZoomBar,
     StockWidgetHorizontalScroller,
@@ -51,7 +51,8 @@ class QStockPlotter(QWidget):
         )
         self.average_line_command_bar = self.average_line_component.get_widget()
 
-        self.navigation_widget = PivotInterface(parent=self)
+        #self.navigation_widget = PivotInterface(parent=self)
+        self.navigation_widget = SegmentedInterface(parent=self)
         self.navigation_widget.addSubInterface(
             self.draw_line_table, "saved_line_table", "Lines"
         )
@@ -141,8 +142,8 @@ class PriceVolumePlotter(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.main_layout = QVBoxLayout(self)
-        self.main_layout.setContentsMargins(0, 0, 0, 0)
-        self.main_layout.setSpacing(0)
+        self.main_layout.setContentsMargins(8, 8, 8, 8)
+        self.main_layout.setSpacing(8)
         self.setLayout(self.main_layout)
 
         self.price_plotter = QStockPlotter(show_zoom_bar=True)
