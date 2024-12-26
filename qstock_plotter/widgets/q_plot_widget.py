@@ -207,7 +207,8 @@ class QPlotWidget(PlotWidget):
         # we need to update the bounding rect before emitting the signal
         # so that outside world can get the updated range_max/min
         self.x_range_max=self.x_end-self.x_start
-        self.x_range_min=self.x_range_max/1000
+        #self.x_range_min=self.x_range_max/1000
+        self.x_range_min=5
         self.y_range_max=self.y_end-self.y_start
         self.y_range_min=self.y_range_max/1000
         self.setLimits(xMin=self.x_start, xMax=self.x_end, yMin=self.y_start, yMax=self.y_end,

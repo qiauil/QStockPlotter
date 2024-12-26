@@ -24,7 +24,7 @@ class QStockPlotter(QWidget):
     def __init__(self, show_zoom_bar=True, parent=None) -> None:
         super().__init__(parent)
 
-        self.main_item = None
+        self.main_item:Optional[AdaptiveGraphObject] = None
 
         self.setMinimumSize(450, 200)
         self.main_plotter = QPlotWidget(self)
