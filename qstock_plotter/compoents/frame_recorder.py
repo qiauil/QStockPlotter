@@ -73,8 +73,8 @@ class FrameRecorderComponent():
         self.full_range_action.triggered.connect(
             lambda: self.plot_widget.update_plot(x_loc=self.plot_widget.x_start, x_range=self.plot_widget.x_range_max))
         self.latest_frame_action.triggered.connect(
-            lambda: self.plot_widget.update_plot(x_loc=self.plot_widget.x_end - self.plot_widget.x_range_min,
-                                                 x_range=self.plot_widget.x_range_min))
+            lambda: self.plot_widget.update_plot(x_loc=self.plot_widget.x_end - self.plot_widget.viewRect().width(),
+                                                 x_range=self.plot_widget.viewRect().width()))
         self.previous_frame_action.triggered.connect(self.__on_previous_frame_clicked)
         self.given_frame_action.triggered.connect(self.__on_given_frame_clicked)
         self.record_current_frame_action.triggered.connect(self.__on_record_current_frame_clicked)
