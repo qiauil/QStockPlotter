@@ -10,8 +10,7 @@ from enum import Enum
 LIGHT_BACKGROUND_COLOR=QtGui.QColor(255,255,255)
 DARK_BACKGROUND_COLOR=QtGui.QColor(30,30,30)
 
-
-def make_style(style_yaml_file="",**kwargs):
+def default_style_configs() -> ConfigurationsHandler:
     configs_handler = ConfigurationsHandler()
     configs_handler.add_config_item("positive_color",
                                         default_value=(254, 109, 115),
@@ -52,7 +51,10 @@ def make_style(style_yaml_file="",**kwargs):
                                     in_func=lambda x,other_config:{key_i:tuple_to_color(x[key_i]) for key_i in x.keys()},
                                     out_func=lambda x,other_config:{key_i:color_to_rbg_tuple(x[key_i]) for key_i in x.keys()},
                                     description="color of the average lines")
-         
+    return configs_handler
+
+def make_style(style_yaml_file="",**kwargs):
+    configs_handler=default_style_configs()
     if style_yaml_file != "":
             configs_handler.set_config_items_from_yaml(style_yaml_file)
     configs_handler.set_config_items(**kwargs)
