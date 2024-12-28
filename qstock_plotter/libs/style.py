@@ -7,7 +7,7 @@ from .helpers import *
 from qfluentwidgets import StyleSheetBase, Theme, qconfig,FluentIconBase,getIconColor,isDarkTheme
 from enum import Enum
 
-LIGHT_BACKGROUND_COLOR=QtGui.QColor(255,255,255)
+LIGHT_BACKGROUND_COLOR=QtGui.QColor(251,251,251)
 DARK_BACKGROUND_COLOR=QtGui.QColor(30,30,30)
 
 def default_style_configs() -> ConfigurationsHandler:
