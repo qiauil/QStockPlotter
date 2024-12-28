@@ -110,6 +110,8 @@ class QPlotWidget(PlotWidget):
     sigViewChanged = pyqtSignal()
     sigViewChangedByDrag = pyqtSignal()
     sigViewChangedNotByDrag = pyqtSignal()
+    sigItemAdded = pyqtSignal()
+    sigItemRemoved = pyqtSignal()
     
     def __init__(self, parent=None, background='default', plotItem=None, **kargs):
         super().__init__(parent, background, plotItem, **kargs)
@@ -403,6 +405,7 @@ class QPlotWidget(PlotWidget):
         self.__on_plot_bounding_updated()
         self.update_plot()
         self.sigBoundingUpdated.emit()
+        self.sigItemAdded.emit()
         return None
 
     def remove_item(self, plot_item):
@@ -425,6 +428,7 @@ class QPlotWidget(PlotWidget):
         else:
             self.__reset_bounding()
         self.update_plot()
+        self.sigItemRemoved.emit()
         return return_value
    
     def get_local_range(self, start, end):
