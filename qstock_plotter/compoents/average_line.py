@@ -123,10 +123,19 @@ class AverageLineComponent():
         self.plot_items_bar = CommandBar(parent=self.parent)
         self.plot_items_bar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
         self.plot_items_bar.setFixedHeight(25)
+        self.plot_items_bar.addSeparator()
         self.add_line_action = Action("Add average line")
         self.add_line_action.setIcon(FluentIcon.ADD)
         self.add_line_action.triggered.connect(self.__on_add_line_action_clicked)
         self.plot_items_bar.addAction(self.add_line_action)
+        self.show_all_line_action = Action("Show all average lines")
+        self.show_all_line_action.setIcon(FluentIcon.VIEW)
+        self.show_all_line_action.triggered.connect(self.show_all_average_lines)
+        self.plot_items_bar.addAction(self.show_all_line_action)
+        self.hide_all_line_action = Action("Hide all average lines")
+        self.hide_all_line_action.setIcon(FluentIcon.HIDE)
+        self.hide_all_line_action.triggered.connect(self.hide_all_average_lines)
+        self.plot_items_bar.addAction(self.hide_all_line_action)
 
         self.average_lines = {}
         
@@ -183,7 +192,7 @@ class AverageLineComponent():
             toggle_button.deleteLater()
         toggle_button.clicked.connect(on_toggle_button_clicked)
         toggle_button.sigRemoveClicked.connect(on_remove_button_clicked)
-        self.plot_items_bar._insertWidgetToLayout(len(self.plot_items_bar._widgets)-1, toggle_button)
+        self.plot_items_bar._insertWidgetToLayout(len(self.plot_items_bar._widgets)-4, toggle_button)
     
     def add_default_average_lines(self):
         """
@@ -193,3 +202,20 @@ class AverageLineComponent():
         for num_average_data in style.average_line_color.keys():
             self.add_average_line(num_average_data, style.average_line_color[num_average_data])
     
+    def show_all_average_lines(self):
+        """
+        Shows all the average lines.
+        """
+        for item in self.plot_items_bar._widgets:
+            if isinstance(item, AverageLineButton):
+                if not item.isChecked():
+                    item.click()
+    
+    def hide_all_average_lines(self):
+        """
+        Hides all the average lines.
+        """
+        for item in self.plot_items_bar._widgets:
+            if isinstance(item, AverageLineButton):
+                if item.isChecked():
+                    item.click()
