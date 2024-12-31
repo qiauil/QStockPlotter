@@ -389,6 +389,11 @@ class QPlotWidget(PlotWidget):
         """
         self.plotted_items.append(plot_item)
         self.addItem(plot_item)
+        self.refresh_bounding(x_ticks, y_ticks)
+        self.sigItemAdded.emit()
+        return None
+    
+    def refresh_bounding(self,x_ticks=None,y_ticks=None):
         if len(self.plotted_items) == 1:
             self.x_start, self.x_end, self.y_start, self.y_end = self.__plot_bounding()
         else:
@@ -405,8 +410,7 @@ class QPlotWidget(PlotWidget):
         self.__on_plot_bounding_updated()
         self.update_plot()
         self.sigBoundingUpdated.emit()
-        self.sigItemAdded.emit()
-        return None
+
 
     def remove_item(self, plot_item):
         """
@@ -661,3 +665,9 @@ class QPlotWidget(PlotWidget):
         Move the plot to the start (left side).
         """
         self.update_plot(x_loc=self.x_start,x_range=self.viewRect().width())
+
+    def full_range(self):
+        """
+        Set the plot to the full range.
+        """
+        self.update_plot(x_loc=self.x_start,x_range=self.x_end-self.x_start)

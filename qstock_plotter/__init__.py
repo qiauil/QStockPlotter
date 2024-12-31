@@ -100,7 +100,8 @@ class QStockPlotter(QWidget):
                   "set_full_range_enabled",
                   "set_x_range",
                   "move_to_end",
-                  "move_to_start",]:
+                  "move_to_start",
+                  "full_range",]:
             setattr(self, m, getattr(self.main_plotter, m))
 
         set_background_with_theme(self)
@@ -201,3 +202,6 @@ class PriceVolumePlotter(QWidget):
     
     def move_to_start(self):
         self.price_plotter.move_to_start()
+
+    def full_range(self):
+        self.price_plotter.full_range()
