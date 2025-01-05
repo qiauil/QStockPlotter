@@ -7,7 +7,7 @@ import sys
 
 app = QApplication(sys.argv)
 app.setApplicationName("QStockPlotter")
-sample_stock_data=HandlerCandlestickHDF5("./sample_stock_data.h5")
+sample_stock_data=HDF5Handler("./sample_stock_data.h5")
 widget=PriceVolumePlotter()
 widget.show()
 widget.plot_price_volume(sample_stock_data.month_data.prices,sample_stock_data.month_data.volume)

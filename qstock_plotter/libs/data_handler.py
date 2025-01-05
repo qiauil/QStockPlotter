@@ -152,7 +152,14 @@ class TradeData:
     prices:PricesDataFrame
     volume:VolumeDataFrame
 
-class HandlerCandlestickHDF5():
+class DataHandler():
+
+    def __init__(self):
+        self.day_data:TradeData=None
+        self.week_data:TradeData=None
+        self.month_data:TradeData=None
+
+class HDF5Handler(DataHandler):
     """
     A class that handles candlestick data from an HDF5 file.
 
@@ -162,11 +169,12 @@ class HandlerCandlestickHDF5():
         month_data (TradeData): Candlestick data for monthly intervals.
 
     Methods:
-        __init__(hdf5_path): Initializes the HandlerCandlestickHDF5 object.
+        __init__(hdf5_path): Initializes the HDF5Handler object.
 
     """
 
     def __init__(self, hdf5_path) -> None:
+        super().__init__()
         self.__df_day = pd.read_hdf(hdf5_path, key="day_data")
         self.__df_week = pd.read_hdf(hdf5_path, key="week_data")
         self.__df_month = pd.read_hdf(hdf5_path, key="month_data")
