@@ -2,6 +2,7 @@ import pandas as pd
 from abc import *
 from typing import Union
 from dataclasses import dataclass,field
+from copy import deepcopy
 
 class ChildDataFrame():
     """
@@ -37,7 +38,7 @@ class ChildDataFrame():
             x_label_key (str, optional): The key to access the x-label data. Defaults to None.
         """
         data_keys = data_keys if isinstance(data_keys, list) else [data_keys]
-        self.data_keys = data_keys
+        self.data_keys = deepcopy(data_keys)
         if max_y_key is not None:
             if max_y_key not in data_keys:
                 data_keys.append(max_y_key)
@@ -54,6 +55,9 @@ class ChildDataFrame():
         if x_label_key not in data_keys:
             data_keys.append(x_label_key)
         self.data_frame = data_frame[data_keys]
+        print(f"Data keys: {data_keys}")
+        print("self.data_keys:")
+        print(self.data_keys)
         self.x_ticks : dict = {i: str(self.data_frame[x_label_key][i]) for i in self.data_frame.index}
         self.__index_start = self.get_min_x()
 
@@ -172,6 +176,30 @@ class DataHandler():
         self.week_data:TradeData=None
         self.month_data:TradeData=None
 
+    def save(self, hdf5_path):
+        for key,data in zip(["day_data","week_data","month_data"],[self.day_data,self.week_data,self.month_data]):
+            price=data.prices.data_frame
+            volume=data.volume.data_frame
+            volume=volume.drop(columns=['date'])
+            df=price.join(volume)
+            df.to_hdf(hdf5_path,key=key)
+
+    def load(self, hdf5_path):
+        #self.__df_day = pd.read_hdf(hdf5_path, key="day_data")
+        #self.__df_week = pd.read_hdf(hdf5_path, key="week_data")
+        #self.__df_month = pd.read_hdf(hdf5_path, key="month_data")
+        self.day_data=self._load_data(hdf5_path,"day_data")
+        self.week_data=self._load_data(hdf5_path,"week_data")
+        self.month_data=self._load_data(hdf5_path,"month_data")
+    
+    def _load_data(self, path, key):
+        try:
+            df=pd.read_hdf(path,key=key)
+        except Exception as e:
+            print(f"Error loading data from {path} with key {key}: {e}")
+            return None
+        return TradeData(PricesDataFrame(df),VolumeDataFrame(df))
+
 class HDF5Handler(DataHandler):
     """
     A class that handles candlestick data from an HDF5 file.
@@ -186,11 +214,7 @@ class HDF5Handler(DataHandler):
 
     """
 
-    def __init__(self, hdf5_path) -> None:
+    def __init__(self, hdf5_path:str) -> None:
         super().__init__()
-        self.__df_day = pd.read_hdf(hdf5_path, key="day_data")
-        self.__df_week = pd.read_hdf(hdf5_path, key="week_data")
-        self.__df_month = pd.read_hdf(hdf5_path, key="month_data")
-        self.day_data = TradeData(PricesDataFrame(self.__df_day), VolumeDataFrame(self.__df_day))
-        self.week_data = TradeData(PricesDataFrame(self.__df_week), VolumeDataFrame(self.__df_week))
-        self.month_data = TradeData(PricesDataFrame(self.__df_month), VolumeDataFrame(self.__df_month))
+        self.load(hdf5_path)
+
