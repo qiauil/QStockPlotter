@@ -55,9 +55,6 @@ class ChildDataFrame():
         if x_label_key not in data_keys:
             data_keys.append(x_label_key)
         self.data_frame = data_frame[data_keys]
-        print(f"Data keys: {data_keys}")
-        print("self.data_keys:")
-        print(self.data_keys)
         self.x_ticks : dict = {i: str(self.data_frame[x_label_key][i]) for i in self.data_frame.index}
         self.__index_start = self.get_min_x()
 
