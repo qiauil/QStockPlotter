@@ -1,7 +1,8 @@
-# QStockPlotter
-
-A PyQt-based plotter for stock data
-
+<h1 align="center">
+  <img src="./pics/logo.png" width="100"/>
+  <br>QStockSimulator<br>
+</h1>
+<h4 align="center">A PyQt-based Plotter for Stock Data</h4>
 <img src="pics/main.png" alt="" style="zoom: 50%;" />
 
 ------
@@ -23,9 +24,8 @@ A PyQt-based plotter for stock data
 ### Installation
 
 ```bash
-python3 setup.py sdist bdist_wheel
-cd dist
-pip install qstock_plotter-*.whl
+git clone https://github.com/qiauil/QStockPlotter.git
+pip install .
 ```
 
 ### Invoke the plotter
@@ -73,6 +73,9 @@ We also introduce the concepts of `DataHandler` and `DataFrame` to build a bridg
 
 ------
 
-### Acknowledgement
+## Acknowledgement
 
 This project is built based on a series of open-source projects, especially the [PyQtGraph](https://www.pyqtgraph.org/) and  [QFluntWidgets](https://qfluentwidgets.com/).
+
+## Sister Project
+* [QStockSimulator](https://github.com/qiauil/QStockSimulator)
